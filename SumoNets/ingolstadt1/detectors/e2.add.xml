@@ -1,0 +1,9 @@
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <laneAreaDetector file="e2.output.xml" freq="60" friendlyPos="x" id="e2det--cluster_274083968_cluster_1200364014_1200364088--201963537#1--201963537#1_1--s" lane="201963537#1_1" pos="0" length="143.72"/>
+    <laneAreaDetector file="e2.output.xml" freq="60" friendlyPos="x" id="e2det--cluster_274083968_cluster_1200364014_1200364088--201963537#1--201963537#1_2--s" lane="201963537#1_2" pos="0" length="143.72"/>
+    <laneAreaDetector file="e2.output.xml" freq="60" friendlyPos="x" id="e2det--cluster_274083968_cluster_1200364014_1200364088--201963537#1--201963537#1_3--l" lane="201963537#1_3" pos="0" length="143.72"/>
+    <laneAreaDetector file="e2.output.xml" freq="60" friendlyPos="x" id="e2det--cluster_274083968_cluster_1200364014_1200364088--164051413--164051413_1--r" lane="164051413_1" pos="1.4155343563970746e-15" length="38.08"/>
+    <laneAreaDetector file="e2.output.xml" freq="60" friendlyPos="x" id="e2det--cluster_274083968_cluster_1200364014_1200364088--164051413--164051413_2--l" lane="164051413_2" pos="1.4155343563970746e-15" length="38.08"/>
+    <laneAreaDetector file="e2.output.xml" freq="60" friendlyPos="x" id="e2det--cluster_274083968_cluster_1200364014_1200364088--104010354--104010354_1--rs" lane="104010354_1" pos="1.4155343563970746e-15" length="56.55"/>
+    <laneAreaDetector file="e2.output.xml" freq="60" friendlyPos="x" id="e2det--cluster_274083968_cluster_1200364014_1200364088--104010354--104010354_2--s" lane="104010354_2" pos="1.4155343563970746e-15" length="56.55"/>
+</additional>

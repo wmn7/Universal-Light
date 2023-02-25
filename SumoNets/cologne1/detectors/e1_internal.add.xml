@@ -1,0 +1,22 @@
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543---32038056#3---32038056#3_0--32038051#0_0--r" lane=":cluster_357187_359543_0_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543---32038056#3---32038056#3_0---28198821#4_0--s" lane=":cluster_357187_359543_1_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543---32038056#3---32038056#3_1---28198821#4_1--s" lane=":cluster_357187_359543_1_1" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543---32038056#3---32038056#3_1--32324544#0_1--l" lane=":cluster_357187_359543_3_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543---32038056#3---32038056#3_1--32038056#0_1--t" lane=":cluster_357187_359543_4_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--23429231#1--23429231#1_0--32038056#0_0--r" lane=":cluster_357187_359543_5_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--23429231#1--23429231#1_0--32038051#0_0--s" lane=":cluster_357187_359543_6_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--23429231#1--23429231#1_1--32038051#0_1--s" lane=":cluster_357187_359543_6_1" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--23429231#1--23429231#1_1---28198821#4_1--l" lane=":cluster_357187_359543_8_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--23429231#1--23429231#1_1--32324544#0_1--t" lane=":cluster_357187_359543_9_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--28198821#3--28198821#3_0--32324544#0_0--r" lane=":cluster_357187_359543_10_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--28198821#3--28198821#3_0--32038056#0_0--s" lane=":cluster_357187_359543_11_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--28198821#3--28198821#3_1--32038056#0_1--s" lane=":cluster_357187_359543_11_1" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--28198821#3--28198821#3_1--32038051#0_1--l" lane=":cluster_357187_359543_13_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--28198821#3--28198821#3_1---28198821#4_1--t" lane=":cluster_357187_359543_14_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--27115123#3--27115123#3_0---28198821#4_0--r" lane=":cluster_357187_359543_15_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--27115123#3--27115123#3_0--32324544#0_0--s" lane=":cluster_357187_359543_16_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--27115123#3--27115123#3_1--32324544#0_1--s" lane=":cluster_357187_359543_16_1" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--27115123#3--27115123#3_1--32038056#0_1--l" lane=":cluster_357187_359543_18_0" pos="3"/>
+    <e1Detector file="e1_internal.output.xml" freq="60" friendlyPos="x" id="e1det_internal--cluster_357187_359543--27115123#3--27115123#3_1--32038051#0_1--t" lane=":cluster_357187_359543_19_0" pos="3"/>
+</additional>
