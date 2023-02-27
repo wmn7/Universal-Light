@@ -1,0 +1,11 @@
+<configuration>
+  <input>
+    <net-file value="ingolstadt1.net.xml"/>
+	  <route-files value="../routes/ingolstadt1.rou.xml"/>
+    <additional-files value="../detectors/e1_internal.add.xml, ../detectors/e2.add.xml"/>
+  </input>
+  <time>
+    <begin value="57600"/>
+    <end value="61200"/>
+  </time>
+</configuration>

@@ -1,0 +1,11 @@
+<configuration>
+  <input>
+    <net-file value="cologne1.net.xml"/>
+	  <route-files value="../routes/cologne1.rou.xml"/>
+    <additional-files value="../detectors/e1_internal.add.xml, ../detectors/e2.add.xml"/>
+  </input>
+  <time>
+    <begin value="25200"/>
+    <end value="28800"/>
+  </time>
+</configuration>

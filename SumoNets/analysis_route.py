@@ -2,14 +2,14 @@
 @Author: WANG Maonan
 @Date: 2023-02-17 21:12:26
 @Description: 分析 route 文件, 得到车辆数, 车流到达的平均值
-@LastEditTime: 2023-02-25 18:46:26
+@LastEditTime: 2023-02-24 23:21:10
 '''
 import numpy as np
 
 from aiolos.utils.get_abs_path import getAbsPath
 from aiolos.outputAnalyze import RouteAnalysis
 
-from UniversalLight.SumoNets.NET_CONFIG import SUMO_NET_CONFIG
+from net_config import SUMO_NET_CONFIG
 
 def moving_average(x, w):
     return np.convolve(x, np.ones(w), 'valid') / w
