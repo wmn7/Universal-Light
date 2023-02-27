@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# sumo output
+*.output.xml
+*.csv
+
 # C extensions
 *.so
 
