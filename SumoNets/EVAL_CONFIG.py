@@ -6,7 +6,7 @@
 '''
 EVAL_SUMO_CONFIG = dict(
     # 四路口, 车道数 (3,3,3,3)
-    eval_four_3=dict(
+    train_four_3=dict(
         tls_id = 'J1',
         sumocfg = 'train_four_3.sumocfg', # 对应的配置文件
         nets = ['4phases.net.xml'],
