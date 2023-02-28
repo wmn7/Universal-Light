@@ -31,7 +31,7 @@ def create_params(is_eval:bool, SHFFLE:bool, N_STACK:int, N_DELAY:int, LOG_PATH:
                 'net':[pathConvert(f'./SumoNets/{_folder}/env/{_net}') for _net in EVAL_SUMO_CONFIG[_folder]['nets']],
                 'route':[pathConvert(f'./SumoNets/{_folder}/routes/{_route}') for _route in EVAL_SUMO_CONFIG[_folder]['routes']]
             }
-            for _folder in ['test_four_3']
+            for _folder in ['eval_four_3']
         }
     else:
         env_dict = {
@@ -57,7 +57,7 @@ def create_params(is_eval:bool, SHFFLE:bool, N_STACK:int, N_DELAY:int, LOG_PATH:
         'use_gui':False,
         'min_green':5,
         'log_file':LOG_PATH,
-        
+
         'env_dict':env_dict
     }
 
