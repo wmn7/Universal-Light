@@ -12,6 +12,11 @@ New Start!
 
 我在新的分支。
 
+## TODO
+
+- 完成 `RNN-P`, `ECNN` 和 `ERNN` 的模型；
+- 完成 Fix Time 30 和 Fix Time 40 的测试；
+
 ## Git 快速使用
 
 每次开始写代码之前，首先更新仓库，同时创建一个新的分支：
@@ -38,4 +43,10 @@ git checkout master # 切换到主分支
 
 ```shell
 git branch -D 2022_01_17_wmn # 删除本地分支
+```
+
+删除远程分支：
+
+```shell
+git push origin --delete 2022_01_17_wmn
 ```
