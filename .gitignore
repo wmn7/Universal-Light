@@ -7,6 +7,12 @@ __pycache__/
 *.output.xml
 *.csv
 
+# model output
+events.*
+*.pkl
+*.zip
+*.log.*
+
 # C extensions
 *.so
 
