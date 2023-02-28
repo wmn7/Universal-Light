@@ -63,7 +63,7 @@ SUMO_NET_CONFIG = dict(
     # 四路口, 车道数 (3,3,3,3)
     test_four_3=dict(
         tls_id = 'J1',
-        sumocfg = 'train_three_3.sumocfg',
+        sumocfg = 'test_four_3.sumocfg',
         nets = ['6phases.net.xml'],
         routes = ['0.rou.xml', '1.rou.xml', '2.rou.xml', '3.rou.xml', '4.rou.xml'],
         start_time = 0,
