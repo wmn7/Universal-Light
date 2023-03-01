@@ -26,7 +26,7 @@ if __name__ == '__main__':
     NUM_CPUS = 8
     EVAL_FREQ = 2000 # 一把交互 700 次
     SAVE_FREQ = EVAL_FREQ*2 # 保存的频率
-    SHFFLE = True # 是否进行数据增强
+    SHFFLE = False # 是否进行数据增强
     N_STACK = 4 # 堆叠
     N_DELAY = 0 # 时延
     MODEL_PATH = pathConvert(f'./results/models/{N_STACK}_{N_DELAY}_{SHFFLE}/')
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     # callback
     # ########
     stop_callback = StopTrainingOnNoModelImprovement(
-        max_no_improvement_evals=5000,
+        max_no_improvement_evals=100,
         verbose=True
     ) # 何时停止
     save_vec_normalize = VecBestNormalizeCallback(save_freq=1, save_path=MODEL_PATH)
@@ -90,7 +90,7 @@ if __name__ == '__main__':
                 policy_kwargs=policy_kwargs, learning_rate=linear_schedule(3e-4), 
                 tensorboard_log=TENSORBOARD_LOG_DIR, device=device
             )
-    model.learn(total_timesteps=5e6, tb_log_name=f'{N_STACK}_{N_DELAY}_{SHFFLE}', callback=callback_list) # log 的名称
+    model.learn(total_timesteps=1e7, tb_log_name=f'{N_STACK}_{N_DELAY}_{SHFFLE}', callback=callback_list) # log 的名称
 
     # #########
     # save env

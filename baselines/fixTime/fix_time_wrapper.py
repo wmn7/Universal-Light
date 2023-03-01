@@ -2,12 +2,10 @@
 @Author: WANG Maonan
 @Date: 2023-03-01 16:50:51
 @Description: 利用 Set Current Phase Duration 实现 Fix Time 的策略
-@LastEditTime: 2023-03-01 17:28:25
+@LastEditTime: 2023-03-01 18:19:18
 '''
 import logging
 import gym
-import numpy as np
-from typing import List, Dict
 from gym import spaces
 
 class env_wrapper(gym.Wrapper):
