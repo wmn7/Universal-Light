@@ -2,7 +2,7 @@
  * @Author: WANG Maonan
  * @Date: 2023-02-25 18:39:16
  * @Description: 中文文档介绍
- * @LastEditTime: 2023-03-01 17:23:07
+ * @LastEditTime: 2023-03-01 18:51:44
 -->
 # A universal TSC with delayed observations
 
@@ -16,6 +16,7 @@ New Start!
 
 - 完成 `RNN-P`, `ECNN` 和 `ERNN` 的模型；
 - 完成 Fix Time 30 和 Fix Time 40 的测试；
+- obs 中加入 next phase id，
 
 ## Git 快速使用
 
