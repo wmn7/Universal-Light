@@ -8,15 +8,15 @@
 
 ## 文件介绍
 
-New Start!
-
-我在新的分支。
 
 ## TODO
 
-- 完成 `RNN-P`, `ECNN` 和 `ERNN` 的模型；
-- 完成 Fix Time 30 和 Fix Time 40 的测试；
-- obs 中加入 next phase id，
+- [X] `obs` 中加入 `next phase id`
+- [ ] 数据增强 wrapper（shuffle，noise，mask）
+- [ ] 完成 `RNN-P`, `ECNN` 和 `ERNN` 的模型；
+- [ ] 完成 Fix Time 的 baseline；
+- [ ] 完成 SOTL 的 baseline；
+
 
 ## Git 快速使用
 

@@ -60,7 +60,10 @@ if __name__ == '__main__':
         min_green=5,
         log_file=log_path, # 存储 log 文件的路径
         env_index='test_env',
-        is_shuffle=False
+        is_shuffle=True,
+        is_change_lane=True,
+        is_noise=True,
+        is_mask=True
     )
     env1 = g_envs() # 生成新的环境
     check_env(env1, warn=True) # 测试环境

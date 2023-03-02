@@ -26,11 +26,14 @@ if __name__ == '__main__':
     NUM_CPUS = 8
     EVAL_FREQ = 2000 # 一把交互 700 次
     SAVE_FREQ = EVAL_FREQ*2 # 保存的频率
-    SHFFLE = False # 是否进行数据增强
+    SHFFLE = True # 是否进行数据增强
+    CHANGE_LANE = True
+    NOISE = True
+    MASK = True
     N_STACK = 4 # 堆叠
     N_DELAY = 0 # 时延
-    MODEL_PATH = pathConvert(f'./results/models/{N_STACK}_{N_DELAY}_{SHFFLE}/')
-    LOG_PATH = pathConvert(f'./results/log/{N_STACK}_{N_DELAY}_{SHFFLE}/') # 存放仿真过程的数据
+    MODEL_PATH = pathConvert(f'./results/models/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}/')
+    LOG_PATH = pathConvert(f'./results/log/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}/') # 存放仿真过程的数据
     TENSORBOARD_LOG_DIR = pathConvert('./results/tensorboard_logs/')
     if not os.path.exists(MODEL_PATH):
         os.makedirs(MODEL_PATH)
@@ -39,13 +42,13 @@ if __name__ == '__main__':
     if not os.path.exists(LOG_PATH):
         os.makedirs(LOG_PATH)
 
-    train_params = create_params(is_eval=False, SHFFLE=SHFFLE, N_DELAY=N_DELAY, N_STACK=N_STACK, LOG_PATH=LOG_PATH)
-    eval_params = create_params(is_eval=True, SHFFLE=SHFFLE, N_DELAY=N_DELAY, N_STACK=N_STACK, LOG_PATH=LOG_PATH)
+    train_params = create_params(is_eval=False, is_shuffle=SHFFLE, is_change_lane=CHANGE_LANE, is_mask=MASK, is_noise=NOISE, N_DELAY=N_DELAY, N_STACK=N_STACK, LOG_PATH=LOG_PATH)
+    eval_params = create_params(is_eval=True, is_shuffle=SHFFLE, is_change_lane=CHANGE_LANE, is_mask=MASK, is_noise=NOISE, N_DELAY=N_DELAY, N_STACK=N_STACK, LOG_PATH=LOG_PATH)
     # The environment for training
-    env = SubprocVecEnv([makeENV.make_env(env_index=f'{N_STACK}_{N_DELAY}_{SHFFLE}_{i}', **train_params) for i in range(NUM_CPUS)])
+    env = SubprocVecEnv([makeENV.make_env(env_index=f'{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}_{i}', **train_params) for i in range(NUM_CPUS)])
     env = VecNormalize(env, norm_obs=True, norm_reward=True) # 进行标准化
     # The environment for evaluating
-    eval_env = SubprocVecEnv([makeENV.make_env(env_index=f'evaluate_{N_STACK}_{N_DELAY}_{SHFFLE}_{i}', **eval_params) for i in range(1)])
+    eval_env = SubprocVecEnv([makeENV.make_env(env_index=f'evaluate_{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}', **eval_params) for i in range(1)])
     eval_env = VecNormalize(eval_env, norm_obs=True, norm_reward=True) # 进行标准化
     eval_env.training = False # 测试的时候不要更新
     eval_env.norm_reward = False
@@ -90,7 +93,7 @@ if __name__ == '__main__':
                 policy_kwargs=policy_kwargs, learning_rate=linear_schedule(3e-4), 
                 tensorboard_log=TENSORBOARD_LOG_DIR, device=device
             )
-    model.learn(total_timesteps=1e7, tb_log_name=f'{N_STACK}_{N_DELAY}_{SHFFLE}', callback=callback_list) # log 的名称
+    model.learn(total_timesteps=1e7, tb_log_name=f'{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}', callback=callback_list) # log 的名称
 
     # #########
     # save env

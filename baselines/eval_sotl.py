@@ -54,7 +54,7 @@ if __name__ == '__main__':
         sumo_cfg=cfg_xml,
         net_file=net_xml,
         route_file=route_xml,
-        use_gui=True,
+        use_gui=False,
         min_green=5,
         trip_info=trip_info,
         statistic_output=statistic_output,

@@ -27,7 +27,7 @@ from aiolos.trafficLog.initLog import init_logging
 
 from .obs_reward_wrapper import obs_reward_wrapper
 from .frame_stack_wrapper import frame_stack_delayed_wrapper
-from .shuffle_wrapper import shuffle_wrapper
+from .data_augmentation_wrapper import data_augmentation_wrapper
 
 def make_env(            
             tls_id:str,
@@ -41,6 +41,9 @@ def make_env(
             env_dict:Dict[str,str]=None, # 这个优先级高于 net_file 和 route_files
             is_libsumo:bool=False,
             is_shuffle:bool=False, # 是否进行数据增强
+            is_change_lane:bool=False,
+            is_noise:bool=False,
+            is_mask:bool=False,
             num_stack:int=4, # obs 堆叠的数量
             num_delayed:int=0, # obs 延迟的时间
             trip_info:str=None,
@@ -105,7 +108,14 @@ def make_env(
                 num_delayed=num_delayed
         ) # 处理 frame stack 和 delayed obs
 
-        env = shuffle_wrapper(env=env, is_shuffle=is_shuffle) # 对 obs 进行数据增强
+        # data augmentation
+        env = data_augmentation_wrapper(
+            env=env, 
+            is_shuffle=is_shuffle,
+            is_change_lane=is_change_lane,
+            is_noise=is_noise,
+            is_mask=is_mask,
+        ) # 对 obs 进行数据增强
 
         return Monitor(env, filename=f'{log_file}/{env_index}')
         
