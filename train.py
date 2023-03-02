@@ -5,6 +5,7 @@
 @LastEditTime: 2023-02-24 23:20:10
 '''
 import os
+import argparse
 import torch
 from stable_baselines3 import PPO
 from stable_baselines3.common.callbacks import CallbackList, EvalCallback, StopTrainingOnNoModelImprovement, CheckpointCallback
@@ -12,6 +13,7 @@ from stable_baselines3.common.vec_env import SubprocVecEnv, VecNormalize
 
 from aiolos.utils.get_abs_path import getAbsPath
 from aiolos.trafficLog.initLog import init_logging
+pathConvert = getAbsPath(__file__)
 
 from sumo_env import makeENV
 from models import scnn
@@ -19,19 +21,18 @@ from create_params import create_params
 from utils.lr_schedule import linear_schedule
 from utils.env_normalize import VecNormalizeCallback, VecBestNormalizeCallback
 
-if __name__ == '__main__':
-    pathConvert = getAbsPath(__file__)
-    init_logging(log_path=pathConvert('./'), log_level=0)
-    
+def experiment(is_shuffle, is_change_lane, is_noise, is_mask, n_stack, n_delay):
+    # args
+    SHFFLE = is_shuffle # 是否进行数据增强
+    CHANGE_LANE = is_change_lane
+    NOISE = is_noise
+    MASK = is_mask
+    N_STACK = n_stack # 堆叠
+    N_DELAY = n_delay # 时延
+
     NUM_CPUS = 8
     EVAL_FREQ = 2000 # 一把交互 700 次
     SAVE_FREQ = EVAL_FREQ*2 # 保存的频率
-    SHFFLE = True # 是否进行数据增强
-    CHANGE_LANE = True
-    NOISE = True
-    MASK = True
-    N_STACK = 4 # 堆叠
-    N_DELAY = 0 # 时延
     MODEL_PATH = pathConvert(f'./results/models/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}/')
     LOG_PATH = pathConvert(f'./results/log/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}/') # 存放仿真过程的数据
     TENSORBOARD_LOG_DIR = pathConvert('./results/tensorboard_logs/')
@@ -99,3 +100,21 @@ if __name__ == '__main__':
     # save env
     # #########
     env.save(f'{MODEL_PATH}/vec_normalize.pkl')
+
+
+if __name__ == '__main__':
+    init_logging(log_path=pathConvert('./'), log_level=0)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--shuffle', default=False, action='store_true')
+    parser.add_argument('--laneNums', default=False, action='store_true')
+    parser.add_argument('--noise', default=False, action='store_true')
+    parser.add_argument('--mask', default=False, action='store_true')
+    parser.add_argument('--stack', type=int, default=4)
+    parser.add_argument('--delay', type=int, default=0)
+    args = parser.parse_args()
+
+    experiment(
+        is_shuffle=args.shuffle, is_change_lane=args.laneNums,
+        is_mask=args.mask, is_noise=args.noise,
+        n_stack=args.stack, n_delay=args.delay
+    )
