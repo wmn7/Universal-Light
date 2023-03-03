@@ -36,7 +36,7 @@ def experiment(is_shuffle, is_change_lane, is_noise, is_mask, n_stack, n_delay, 
     SAVE_FREQ = EVAL_FREQ*2 # 保存的频率
     MODEL_PATH = pathConvert(f'./results/models/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}/')
     LOG_PATH = pathConvert(f'./results/log/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}/') # 存放仿真过程的数据
-    TENSORBOARD_LOG_DIR = pathConvert('./results/tensorboard_logs/{model_name}/')
+    TENSORBOARD_LOG_DIR = pathConvert(f'./results/tensorboard_logs/{model_name}/')
     if not os.path.exists(MODEL_PATH):
         os.makedirs(MODEL_PATH)
     if not os.path.exists(TENSORBOARD_LOG_DIR):
