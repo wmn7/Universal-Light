@@ -58,17 +58,12 @@ def experiment(is_shuffle, is_change_lane, is_noise, is_mask, n_stack, n_delay, 
     # ########
     # callback
     # ########
-    stop_callback = StopTrainingOnNoModelImprovement(
-        max_no_improvement_evals=100,
-        verbose=True
-    ) # 何时停止
     save_vec_normalize = VecBestNormalizeCallback(save_freq=1, save_path=MODEL_PATH)
     eval_callback = EvalCallback(
         eval_env, # 这里换成 eval env 会更加稳定
         eval_freq=EVAL_FREQ,
         best_model_save_path=MODEL_PATH,
         callback_on_new_best=save_vec_normalize,
-        callback_after_eval=stop_callback, # 每次验证之后需要调用
         verbose=1
     ) # 保存最优模型
     checkpoint_callback = CheckpointCallback(
