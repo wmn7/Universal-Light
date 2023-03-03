@@ -42,7 +42,7 @@ class ERNN(BaseFeaturesExtractor):
 
     def forward(self, observations):
         batch_size = observations.size()[0] # (BatchSize, N, 8, K)
-        observations = torch.unsqueeze(observations,2) # (BatchSize, N, 1, 8, K)
+        # observations = torch.unsqueeze(observations,2) # (BatchSize, N, 1, 8, K)
         observations = observations.view(-1, 1, 8, self.net_shape[-1]) # (BatchSize*N, 1, 8, K)
         conv_out = self.view_conv(observations).view(batch_size, self.net_shape[0], -1) # (BatchSize*N, 256) --> (BatchSize, N, 256)
         lstm_out, _ = self.extract_time_info(conv_out)
