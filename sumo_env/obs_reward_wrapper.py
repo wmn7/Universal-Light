@@ -32,8 +32,8 @@ class obs_reward_wrapper(gym.Wrapper):
 
         self.observation_space = spaces.Box(
             low=0, 
-            high=5,
-            shape=(8,7)
+            high=3,
+            shape=(8,8)
         ) # obs 空间
         # 动作空间不需要重写定义, Next or Not 动作空间大小就是 2
 
@@ -152,11 +152,14 @@ class obs_reward_wrapper(gym.Wrapper):
     def _process_obs(self, observation):
         """处理 observation, 将 dict 转换为 array.
         - 每个 movement 的 state 包含以下的部分, state 包含以下几个部分, 
-            :[flow, mean_occupancy, max_occupancy, is_s, num_lane, mingreen, is_now_phase]
+            :[flow, mean_occupancy, max_occupancy, is_s, num_lane, mingreen, is_now_phase, is_next_phase]
         """
+        phase_num = len(observation['phase_id']) # phase 的个数
         delta_time = observation['delta_time']
         phase_index = observation['phase_id'].index(1) # 相位所在 index
+        next_phase_index = (phase_index+1)%phase_num
         phase_movements = self.net_masks[self.env._net][phase_index] # 得到一个 phase 有哪些 movement 组成的
+        next_phase_movements = self.net_masks[self.env._net][next_phase_index]
 
         _observation_net_info = list() # 路网的信息
         for _movement_id, _movement in enumerate(self.net_movements[self.env._net]): # 按照 movment_id 提取
@@ -167,13 +170,14 @@ class obs_reward_wrapper(gym.Wrapper):
             num_lane = self.movement_info[self.env._net][_movement][1]/5 # 车道数 (默认不会超过 5 个车道)
             is_now_phase = phase_movements[_movement_id] # now phase id
             min_green = observation['min_green'][0] if is_now_phase else 0 # min green
+            is_next_phase = next_phase_movements[_movement_id] # next phase id
             
-            _observation_net_info.append([flow, mean_occupancy, max_occupancy, is_s, num_lane, min_green, is_now_phase])
+            _observation_net_info.append([flow, mean_occupancy, max_occupancy, is_s, num_lane, min_green, is_now_phase, is_next_phase])
 
         # 不是四岔路, 进行不全
         for _ in range(8 - len(_observation_net_info)):
             self.logger.debug(f'{self.env._net} 进行 obs 补全到 8.')
-            _observation_net_info.append([0]*7)
+            _observation_net_info.append([0]*8)
 
         obs = np.array(_observation_net_info, dtype=np.float32) # 每个 movement 的信息
         return obs

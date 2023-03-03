@@ -6,7 +6,6 @@
 '''
 import gym
 import numpy as np
-from gym import spaces
 
 import torch
 import torch.nn as nn
@@ -44,4 +43,4 @@ class SCNN(BaseFeaturesExtractor):
     def forward(self, observations):
         batch_size = observations.size()[0] # (BatchSize, N, 8, K)
         conv_out = self.view_conv(observations).view(batch_size, -1)
-        return self.fc(conv_out)    
+        return self.fc(conv_out)

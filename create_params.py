@@ -9,7 +9,10 @@ from aiolos.utils.get_abs_path import getAbsPath
 from SumoNets.TRAIN_CONFIG import TRAIN_SUMO_CONFIG
 from SumoNets.EVAL_CONFIG import EVAL_SUMO_CONFIG
 
-def create_params(is_eval:bool, SHFFLE:bool, N_STACK:int, N_DELAY:int, LOG_PATH:str):
+def create_params(
+        is_eval:bool, is_shuffle:bool, is_change_lane:bool, is_noise:bool, is_mask:bool,
+        N_STACK:int, N_DELAY:int, LOG_PATH:str
+    ):
     pathConvert = getAbsPath(__file__)
 
     FOLDER_NAME = 'train_four_3' # 不同类型的路口
@@ -50,7 +53,10 @@ def create_params(is_eval:bool, SHFFLE:bool, N_STACK:int, N_DELAY:int, LOG_PATH:
         'sumo_cfg':cfg_xml,
         'net_files':net_xml,
         'route_files':route_xml,
-        'is_shuffle':SHFFLE,
+        'is_shuffle':is_shuffle,
+        'is_change_lane':is_change_lane,
+        'is_noise':is_noise,
+        'is_mask':is_mask,
         'num_stack':N_STACK,
         'num_delayed':N_DELAY,
         'is_libsumo':True,
