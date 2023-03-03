@@ -1,11 +1,10 @@
 '''
 @Author: WANG Maonan
 @Date: 2022-03-15 12:02:58
-@Description: 测试模型 scnn 的表现
+@Description: 测试模型 ernn 的表现
 @LastEditTime: 2022-06-21 22:05:00
 '''
 from aiolos.utils.get_abs_path import getAbsPath
-from aiolos.trafficLog.initLog import init_logging
 
 pathConvert = getAbsPath(__file__)
 import sys
@@ -15,7 +14,7 @@ import gym
 import torch
 import numpy as np
 
-from models.scnn import SCNN
+from models.ernn import ERNN
 
 
 if __name__ == '__main__':
@@ -25,7 +24,7 @@ if __name__ == '__main__':
             high=5,
             shape=(4,8,8)
         ) # obs 空间
-    net = SCNN(observation_space, features_dim=32)
+    net = ERNN(observation_space, features_dim=32)
 
     movement_info = np.array([
         0.3*np.ones((4,8,8)), 
