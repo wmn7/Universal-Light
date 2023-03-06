@@ -96,7 +96,7 @@ class obs_reward_wrapper(gym.Wrapper):
 
             observation = self._process_obs(_observations)
         else:
-            observation = 0
+            observation = np.zeros(self.observation_space.shape)
         
         self.reset_num += 1 # 重置次数
         return observation
