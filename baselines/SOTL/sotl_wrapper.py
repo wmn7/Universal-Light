@@ -45,7 +45,7 @@ class env_wrapper(gym.Wrapper):
                 for _, phase_movement_list in net_phase2movements.items():
                     for phase_movement in phase_movement_list: # 0: ['gsndj_s4--s', 'gsndj_n7--s', 'None--None', 'gsndj_s4--r', 'gsndj_n7--r']
                         direction = phase_movement.split('--')[1] # 获得方向
-                        if direction not in ['None', 'r']: # 去除 右转 和 None
+                        if direction not in ['None', 'r', 't']: # 去除 右转 和 None
                             _net_movement.append(phase_movement)
                 self.net_movements[self.env._net] = sorted(list(set(_net_movement))) # 需要排序, 确保 train 和 test 时候每个路网的 movement 是一样的
 
