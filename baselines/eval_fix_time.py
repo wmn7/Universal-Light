@@ -98,6 +98,6 @@ if __name__ == '__main__':
         'train_four_3', 'train_four_345', 'train_three_3', 
         'test_four_34', 'test_three_34', 'cologne1', 'ingolstadt1'
     ]
-    for _fix_time in [30, 40]:
+    for _fix_time in [20, 30, 40]:
         for _net in test_nets:
             sim_fix_time(net_name=_net, fix_time=_fix_time)

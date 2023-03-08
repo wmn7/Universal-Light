@@ -34,22 +34,27 @@ if __name__ == '__main__':
 
         for _net_name in nets_name:
             _net_name = _net_name.split('.')[0]
+            fix20_results = list()
             fix30_results = list()
             fix40_results = list()
             sotl_results = list()
             for _route_name in routes_name:
                 _route_name = _route_name.split('.')[0]
+                fix20_statistic_path = pathConvert(f'./Result/FixTime/{_net_folder}/20/{_net_name}/{_route_name}/statistic.out.xml')
                 fix30_statistic_path = pathConvert(f'./Result/FixTime/{_net_folder}/30/{_net_name}/{_route_name}/statistic.out.xml')
                 fix40_statistic_path = pathConvert(f'./Result/FixTime/{_net_folder}/40/{_net_name}/{_route_name}/statistic.out.xml')
                 sotl_statistic_path = pathConvert(f'./Result/SOTL/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')
+                fix20_wt = get_statistic_result(fix20_statistic_path)
                 fix30_wt = get_statistic_result(fix30_statistic_path) # achieve the waiting time using FixTime30
                 fix40_wt = get_statistic_result(fix40_statistic_path)
                 sotl_wt = get_statistic_result(sotl_statistic_path) # 使用 sotl 的等待时间
+                fix20_results.append(fix20_wt)
                 fix30_results.append(fix30_wt)
                 fix40_results.append(fix40_wt)
                 sotl_results.append(sotl_wt)
             print(
                 f'{_net_folder}-{_net_name}:\n'
+                f'Fix20: {fix20_results};\n'
                 f'Fix30: {fix30_results};\n'
                 f'Fix40: {fix40_results};\n'
                 f'SOTL: {sotl_results};\n'

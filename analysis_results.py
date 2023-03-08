@@ -7,7 +7,6 @@
 from xml.etree import ElementTree as ET
 from aiolos.utils.get_abs_path import getAbsPath
 pathConvert = getAbsPath(__file__)
-import os
 import sys
 sys.path.append(pathConvert('../'))
 
@@ -36,22 +35,34 @@ if __name__ == '__main__':
 
         for _net_name in nets_name:
             _net_name = _net_name.split('.')[0] # 获得路网名称
+            # scnn 类模型
             scnn_results = list()
             scnn_all_results = list()
+            # ernn 类模型
+            ernn_results = list()
+            ernn_all_results = list()
             for _route_name in routes_name:
                 _route_name = _route_name.split('.')[0]
                 scnn_path = pathConvert(f'./results/output/scnn/6_0_False_False_False_False/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')
                 scnn_all_path = pathConvert(f'./results/output/scnn/6_0_True_True_True_True/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')
-
+                ernn_path = pathConvert(f'./results/output/ernn/6_0_False_False_False_False/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')
+                ernn_all_path = pathConvert(f'./results/output/ernn/6_0_True_True_True_True/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')
+                
                 scnn_wt = get_statistic_result(scnn_path)
                 scnn_all_wt = get_statistic_result(scnn_all_path)
+                ernn_wt = get_statistic_result(ernn_path)
+                ernn_all_wt = get_statistic_result(ernn_all_path)
 
                 scnn_results.append(scnn_wt)
                 scnn_all_results.append(scnn_all_wt)
+                ernn_results.append(ernn_wt)
+                ernn_all_results.append(ernn_all_wt)
 
             print(
                 f'{_net_folder}-{_net_name}:\n'
                 f'SCNN: {scnn_results};\n'
                 f'SCNN+ALL: {scnn_all_results};\n'
+                f'ERNN: {ernn_results};\n'
+                f'ERNN+ALL: {ernn_all_results};\n'
                 f'---\n'
             )
