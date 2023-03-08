@@ -2,7 +2,7 @@
 @Author: WANG Maonan
 @Date: 2022-04-12 12:02:58
 @Description: Use CNN to extract features and then use Transformer rather than LSTM
-@LastEditTime: 2022-06-17 14:47:22
+@LastEditTime: 2023-03-06 13:48:42
 '''
 import gym
 import numpy as np
@@ -59,7 +59,7 @@ class EAttention(BaseFeaturesExtractor):
         conv_out = self.view_conv(observations).view(batch_size, self.net_shape[0], -1) # (BatchSize*N, 128) --> (BatchSize, N, 128)
         # embedding
         x = self.junction_embedding(conv_out) # (BatchSize, N, 128) --> (BatchSize, N, 64)
-        x = x + self.pos_embed # (BatchSize, N, 64)
+        x = x + self.pos_embed # (BatchSize, N, 64), 加上位置编码
         x = self.layernorm1(self.encoder(x)).view(batch_size, -1) # (BatchSize, N, 64)  --> (BatchSize, N*64)
         x = self.layernorm2(self.map_feature(x)) # (BatchSize, N*64) --> (BatchSize, 32)
         return x

@@ -48,6 +48,8 @@ def make_env(
             num_delayed:int=0, # obs 延迟的时间
             trip_info:str=None,
             statistic_output:str=None,
+            summary:str=None,
+            queue_output:str=None,
             tls_state_add:List[str]=None,
             delta_times:int=5,
             min_green:int=5,
@@ -83,6 +85,8 @@ def make_env(
                             route_file=route_files[0],
                             trip_info=trip_info,
                             statistic_output=statistic_output,
+                            summary=summary,
+                            queue_output=queue_output,
                             tls_state_add=tls_state_add,
                             use_gui=use_gui,
                             is_libsumo=is_libsumo,
