@@ -41,22 +41,35 @@ if __name__ == '__main__':
             # ernn 类模型
             ernn_results = list()
             ernn_all_results = list()
+            # eattention 类模型
+            eattention_results = list()
+            eattention_all_results = list()
+
             for _route_name in routes_name:
                 _route_name = _route_name.split('.')[0]
+                # 文件路径
                 scnn_path = pathConvert(f'./results/output/scnn/6_0_False_False_False_False/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')
                 scnn_all_path = pathConvert(f'./results/output/scnn/6_0_True_True_True_True/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')
                 ernn_path = pathConvert(f'./results/output/ernn/6_0_False_False_False_False/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')
                 ernn_all_path = pathConvert(f'./results/output/ernn/6_0_True_True_True_True/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')
-                
+                eattention_path = pathConvert(f'./results/output/eattention/6_0_False_False_False_False/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')
+                eattention_all_path = pathConvert(f'./results/output/eattention/6_0_True_True_True_True/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')
+
+                # 分析文件结果
                 scnn_wt = get_statistic_result(scnn_path)
                 scnn_all_wt = get_statistic_result(scnn_all_path)
                 ernn_wt = get_statistic_result(ernn_path)
                 ernn_all_wt = get_statistic_result(ernn_all_path)
+                eattention_wt = get_statistic_result(eattention_path)
+                eattention_all_wt = get_statistic_result(eattention_all_path)
 
+                # 添加文件结果
                 scnn_results.append(scnn_wt)
                 scnn_all_results.append(scnn_all_wt)
                 ernn_results.append(ernn_wt)
                 ernn_all_results.append(ernn_all_wt)
+                eattention_results.append(eattention_wt)
+                eattention_all_results.append(eattention_all_wt)
 
             print(
                 f'{_net_folder}-{_net_name}:\n'
@@ -64,5 +77,7 @@ if __name__ == '__main__':
                 f'SCNN+ALL: {scnn_all_results};\n'
                 f'ERNN: {ernn_results};\n'
                 f'ERNN+ALL: {ernn_all_results};\n'
+                f'EAttention: {eattention_results};\n'
+                f'EAttention+ALL: {eattention_all_results};\n'
                 f'---\n'
             )

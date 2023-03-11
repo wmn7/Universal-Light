@@ -8,7 +8,7 @@ import os
 import argparse
 import torch
 from stable_baselines3 import PPO
-from stable_baselines3.common.callbacks import CallbackList, EvalCallback, StopTrainingOnNoModelImprovement, CheckpointCallback
+from stable_baselines3.common.callbacks import CallbackList, EvalCallback, CheckpointCallback
 from stable_baselines3.common.vec_env import SubprocVecEnv, VecNormalize
 
 from aiolos.utils.get_abs_path import getAbsPath
@@ -16,13 +16,13 @@ from aiolos.trafficLog.initLog import init_logging
 pathConvert = getAbsPath(__file__)
 
 from sumo_env import makeENV
-from models import scnn, ernn, eattention
+from models import scnn, ernn, eattention, eattention_cls
 from create_params import create_params
 from utils.lr_schedule import linear_schedule
 from utils.env_normalize import VecNormalizeCallback, VecBestNormalizeCallback
 
 def experiment(is_shuffle, is_change_lane, is_noise, is_mask, n_stack, n_delay, model_name):
-    assert model_name in ['scnn', 'ernn', 'eattention'], f'Model name error, {model_name}'
+    assert model_name in ['scnn', 'ernn', 'eattention', 'eattention_cls'], f'Model name error, {model_name}'
     # args
     SHFFLE = is_shuffle # 是否进行数据增强
     CHANGE_LANE = is_change_lane
@@ -83,7 +83,8 @@ def experiment(is_shuffle, is_change_lane, is_noise, is_mask, n_stack, n_delay, 
     feature_extract = {
         'scnn': scnn.SCNN,
         'ernn': ernn.ERNN,
-        'eattention': eattention.EAttention
+        'eattention': eattention.EAttention,
+        'eattention_cls': eattention_cls.EAttentionCLS
     }
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     policy_kwargs = dict(
