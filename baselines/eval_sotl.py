@@ -71,7 +71,7 @@ def sim_sotl(net_name:str):
             last_action = 0 # 记录上一次的动作
             action_same_count = 0 # 不能一直做一样的动作
             while not done:
-                if obs > 0.1: # 这里 obs 是最大占有率
+                if obs > 0.3: # 这里 obs 是最大占有率
                     action = 1 # 1 --> keep
                 else:
                     action = 0 # 0 --> change
