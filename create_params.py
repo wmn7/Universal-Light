@@ -31,14 +31,14 @@ def create_params(
     net_xml = [pathConvert(f'./SumoNets/{FOLDER_NAME}/env/{net_name}')]
     route_xml = [pathConvert(f'./SumoNets/{FOLDER_NAME}/routes/{route_name}')]
 
-    if is_eval: # 如果是测试的 reward，就只使用一个环境进行测试
+    if is_eval: # 如果是测试的 reward，就只使用一个环境进行测试（使用 test 路网进行测试）
         env_dict = {
             _folder: {
                 'cfg': pathConvert(f'./SumoNets/{_folder}/env/{EVAL_SUMO_CONFIG[_folder]["sumocfg"]}'),
                 'net':[pathConvert(f'./SumoNets/{_folder}/env/{_net}') for _net in EVAL_SUMO_CONFIG[_folder]['nets']],
                 'route':[pathConvert(f'./SumoNets/{_folder}/routes/{_route}') for _route in EVAL_SUMO_CONFIG[_folder]['routes']]
             }
-            for _folder in ['train_four_3']
+            for _folder in ['test_four_34']
         }
     else:
         env_dict = {
