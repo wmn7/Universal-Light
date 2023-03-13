@@ -12,6 +12,6 @@ do
     python ${FOLDER}/test.py --stack=6 --delay=0 --model_name=eattention --net_name=$net_name
     echo 'Finish eattention False' $net_name
 
-    python ${FOLDER}/test.py --shuffle --laneNums --noise --mask --stack=6 --delay=0 --model_name=eattention --net_name=$net_name
+    python ${FOLDER}/test.py --shuffle --laneNums --flowScale --noise --mask --stack=6 --delay=0 --model_name=eattention --net_name=$net_name
     echo 'Finish eattention True' $net_name
 done

@@ -12,7 +12,9 @@ from SumoNets.EVAL_CONFIG import EVAL_SUMO_CONFIG
 from SumoNets.NET_CONFIG import SUMO_NET_CONFIG as TEST_SUMO_CONFIG # 测试模型时候训练和测试的路网一起进行测试
 
 def create_params(
-        is_eval:bool, is_shuffle:bool, is_change_lane:bool, is_noise:bool, is_mask:bool,
+        is_eval:bool, 
+        is_shuffle:bool, is_change_lane:bool, is_flow_scale:bool,
+        is_noise:bool, is_mask:bool,
         N_STACK:int, N_DELAY:int, LOG_PATH:str
     ):
     pathConvert = getAbsPath(__file__)
@@ -57,6 +59,7 @@ def create_params(
         'route_files':route_xml,
         'is_shuffle':is_shuffle,
         'is_change_lane':is_change_lane,
+        'is_flow_scale':is_flow_scale,
         'is_noise':is_noise,
         'is_mask':is_mask,
         'num_stack':N_STACK,
@@ -135,6 +138,7 @@ def create_test_params(
                 # 下面是数据增强的参数
                 'is_shuffle':False,
                 'is_change_lane':False,
+                'is_flow_scale':False,
                 'is_noise':False,
                 'is_mask':False,
                 'num_stack':N_STACK,

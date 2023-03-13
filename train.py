@@ -21,11 +21,16 @@ from create_params import create_params
 from utils.lr_schedule import linear_schedule
 from utils.env_normalize import VecNormalizeCallback, VecBestNormalizeCallback
 
-def experiment(is_shuffle, is_change_lane, is_noise, is_mask, n_stack, n_delay, model_name):
+def experiment(
+        is_shuffle, is_change_lane, is_flow_scale,
+        is_noise, is_mask, 
+        n_stack, n_delay, model_name
+    ):
     assert model_name in ['scnn', 'ernn', 'eattention', 'eattention_cls'], f'Model name error, {model_name}'
     # args
     SHFFLE = is_shuffle # 是否进行数据增强
     CHANGE_LANE = is_change_lane
+    FLOW_SCALE = is_flow_scale
     NOISE = is_noise
     MASK = is_mask
     N_STACK = n_stack # 堆叠
@@ -34,8 +39,8 @@ def experiment(is_shuffle, is_change_lane, is_noise, is_mask, n_stack, n_delay, 
     NUM_CPUS = 8
     EVAL_FREQ = 2000 # 一把交互 700 次
     SAVE_FREQ = EVAL_FREQ*2 # 保存的频率
-    MODEL_PATH = pathConvert(f'./results/models/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}/')
-    LOG_PATH = pathConvert(f'./results/log/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}/') # 存放仿真过程的数据
+    MODEL_PATH = pathConvert(f'./results/models/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/')
+    LOG_PATH = pathConvert(f'./results/log/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/') # 存放仿真过程的数据
     TENSORBOARD_LOG_DIR = pathConvert(f'./results/tensorboard_logs/{model_name}/')
     if not os.path.exists(MODEL_PATH):
         os.makedirs(MODEL_PATH)
@@ -44,13 +49,23 @@ def experiment(is_shuffle, is_change_lane, is_noise, is_mask, n_stack, n_delay, 
     if not os.path.exists(LOG_PATH):
         os.makedirs(LOG_PATH)
 
-    train_params = create_params(is_eval=False, is_shuffle=SHFFLE, is_change_lane=CHANGE_LANE, is_mask=MASK, is_noise=NOISE, N_DELAY=N_DELAY, N_STACK=N_STACK, LOG_PATH=LOG_PATH)
-    eval_params = create_params(is_eval=True, is_shuffle=SHFFLE, is_change_lane=CHANGE_LANE, is_mask=MASK, is_noise=NOISE, N_DELAY=N_DELAY, N_STACK=N_STACK, LOG_PATH=LOG_PATH)
+    train_params = create_params(
+        is_eval=False, 
+        is_shuffle=SHFFLE, is_change_lane=CHANGE_LANE, is_flow_scale=FLOW_SCALE,
+        is_mask=MASK, is_noise=NOISE, 
+        N_DELAY=N_DELAY, N_STACK=N_STACK, LOG_PATH=LOG_PATH
+    )
+    eval_params = create_params(
+        is_eval=True, 
+        is_shuffle=SHFFLE, is_change_lane=CHANGE_LANE, is_flow_scale=FLOW_SCALE,
+        is_mask=MASK, is_noise=NOISE, 
+        N_DELAY=N_DELAY, N_STACK=N_STACK, LOG_PATH=LOG_PATH
+    )
     # The environment for training
-    env = SubprocVecEnv([makeENV.make_env(env_index=f'{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}_{i}', **train_params) for i in range(NUM_CPUS)])
+    env = SubprocVecEnv([makeENV.make_env(env_index=f'{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}_{i}', **train_params) for i in range(NUM_CPUS)])
     env = VecNormalize(env, norm_obs=True, norm_reward=True) # 进行标准化
     # The environment for evaluating
-    eval_env = SubprocVecEnv([makeENV.make_env(env_index=f'evaluate_{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}', **eval_params) for i in range(1)])
+    eval_env = SubprocVecEnv([makeENV.make_env(env_index=f'evaluate_{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}', **eval_params) for i in range(1)])
     eval_env = VecNormalize(eval_env, norm_obs=True, norm_reward=True) # 进行标准化
     eval_env.training = False # 测试的时候不要更新
     eval_env.norm_reward = False
@@ -96,7 +111,7 @@ def experiment(is_shuffle, is_change_lane, is_noise, is_mask, n_stack, n_delay, 
                 policy_kwargs=policy_kwargs, learning_rate=linear_schedule(3e-4), 
                 tensorboard_log=TENSORBOARD_LOG_DIR, device=device
             )
-    model.learn(total_timesteps=1e7, tb_log_name=f'{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}', callback=callback_list) # log 的名称
+    model.learn(total_timesteps=1e7, tb_log_name=f'{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}', callback=callback_list) # log 的名称
 
     # #########
     # save env
@@ -109,6 +124,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--shuffle', default=False, action='store_true')
     parser.add_argument('--laneNums', default=False, action='store_true')
+    parser.add_argument('--flowScale', default=False, action='store_true')
     parser.add_argument('--noise', default=False, action='store_true')
     parser.add_argument('--mask', default=False, action='store_true')
     parser.add_argument('--stack', type=int, default=4)

@@ -13,6 +13,6 @@ do
     python ${FOLDER}/test.py --stack=6 --delay=0 --model_name=scnn --net_name=$net_name
     echo 'Finish scnn False' $net_name
 
-    python ${FOLDER}/test.py --shuffle --laneNums --noise --mask --stack=6 --delay=0 --model_name=scnn --net_name=$net_name
+    python ${FOLDER}/test.py --shuffle --laneNums --flowScale --noise --mask --stack=6 --delay=0 --model_name=scnn --net_name=$net_name
     echo 'Finish scnn True' $net_name
 done
