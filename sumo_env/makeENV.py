@@ -42,6 +42,7 @@ def make_env(
             is_libsumo:bool=False,
             is_shuffle:bool=False, # 是否进行数据增强
             is_change_lane:bool=False,
+            is_flow_scale:bool=False,
             is_noise:bool=False,
             is_mask:bool=False,
             num_stack:int=4, # obs 堆叠的数量
@@ -117,6 +118,7 @@ def make_env(
             env=env, 
             is_shuffle=is_shuffle,
             is_change_lane=is_change_lane,
+            is_flow_scale=is_flow_scale,
             is_noise=is_noise,
             is_mask=is_mask,
         ) # 对 obs 进行数据增强

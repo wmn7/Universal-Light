@@ -62,6 +62,7 @@ if __name__ == '__main__':
         env_index='test_env',
         is_shuffle=True,
         is_change_lane=True,
+        is_flow_scale=True,
         is_noise=True,
         is_mask=True
     )

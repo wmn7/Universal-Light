@@ -22,6 +22,7 @@ class data_augmentation_wrapper(gym.ObservationWrapper):
         env: gym.Env,
         is_shuffle: bool,
         is_change_lane: bool,
+        is_flow_scale: bool, 
         is_noise: bool,
         is_mask: bool,
     ):
@@ -34,6 +35,7 @@ class data_augmentation_wrapper(gym.ObservationWrapper):
         self.logger = logging.getLogger(__name__)
         self.is_shuffle = is_shuffle # 是否 shuffle
         self.is_change_lane = is_change_lane
+        self.is_flow_scale = is_flow_scale
         self.is_noise = is_noise
         self.is_mask = is_mask
         _phase_num = self.observation_space.shape[-2]
@@ -77,7 +79,7 @@ class data_augmentation_wrapper(gym.ObservationWrapper):
         """对 observation 每行第四个元素进行修改，也就是修改车道数
         车道数可以有 1,2,3,4,5 --> 0.2,0.4,0.6,0.8,1.0
         """
-        if np.random.rand()>0.6:
+        if np.random.rand()>0.5:
             self.logger.debug(f'Change Lane Number')
             _raw_lane_num = observation[0,:,4] # 原始车道数
             _new_lane_num = np.random.choice(
@@ -95,13 +97,23 @@ class data_augmentation_wrapper(gym.ObservationWrapper):
             # observation[:,:,2] = observation[:,:,2]*_ratio
 
         return observation
+    
+    def _flow_scale(self, observation):
+        """将 obs 的 flow 同时变大或是变小，乘上同一个数字
+        """
+        if np.random.rand()>0.5:
+            _ratio = 0.8+0.7*np.random.rand() # noise 的范围是 0.8 - 1.5
+            observation[:,:,0] = observation[:,:,0]*_ratio
+            observation[:,:,1] = observation[:,:,1]*_ratio
+            observation[:,:,2] = observation[:,:,2]*_ratio
+        return observation
 
     def _noise(self, observation):
         """对 obs 每行的前三个元素乘上一个随机数
         """
-        if np.random.rand()>0.6:
+        if np.random.rand()>0.5:
             self.logger.debug(f'Add noise in traffic flow.')
-            _noise = 0.8+0.4*np.random.rand((8))
+            _noise = 0.9+0.2*np.random.rand((8))
             observation[:,:,0] = observation[:,:,0]*_noise
             observation[:,:,1] = observation[:,:,1]*_noise
             observation[:,:,2] = observation[:,:,2]*_noise
@@ -110,7 +122,7 @@ class data_augmentation_wrapper(gym.ObservationWrapper):
     def _mask(self, observation):
         """对 obs 中某一片 movement info 遮住
         """
-        if np.random.rand()>0.6:
+        if np.random.rand()>0.5:
             self.logger.debug(f'Add mask in movement info.')
             _slice = list(range(observation.shape[0]))
             _mask_index = np.random.choice(_slice)
@@ -124,6 +136,8 @@ class data_augmentation_wrapper(gym.ObservationWrapper):
             obs_wrapper = self._shuffle(obs_wrapper)
         if self.is_change_lane:
             obs_wrapper = self._change_lane_num(obs_wrapper)
+        if self.is_flow_scale:
+            obs_wrapper = self._flow_scale(obs_wrapper)
         if self.is_noise:
             obs_wrapper = self._noise(obs_wrapper)
         if self.is_mask:
