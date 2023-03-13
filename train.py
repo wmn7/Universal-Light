@@ -24,7 +24,7 @@ from utils.env_normalize import VecNormalizeCallback, VecBestNormalizeCallback
 def experiment(
         is_shuffle, is_change_lane, is_flow_scale,
         is_noise, is_mask, 
-        n_stack, n_delay, model_name
+        n_stack, n_delay, model_name, num_cpus
     ):
     assert model_name in ['scnn', 'ernn', 'eattention', 'eattention_cls'], f'Model name error, {model_name}'
     # args
@@ -36,7 +36,7 @@ def experiment(
     N_STACK = n_stack # 堆叠
     N_DELAY = n_delay # 时延
 
-    NUM_CPUS = 8
+    NUM_CPUS = num_cpus
     EVAL_FREQ = 2000 # 一把交互 700 次
     SAVE_FREQ = EVAL_FREQ*2 # 保存的频率
     MODEL_PATH = pathConvert(f'./results/models/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/')
@@ -129,12 +129,13 @@ if __name__ == '__main__':
     parser.add_argument('--mask', default=False, action='store_true')
     parser.add_argument('--stack', type=int, default=4)
     parser.add_argument('--delay', type=int, default=0)
+    parser.add_argument('--cpus', type=int, default=8) # 同时开启的仿真数量
     parser.add_argument('--model_name', type=str, default='scnn')
     args = parser.parse_args()
 
     experiment(
-        is_shuffle=args.shuffle, is_change_lane=args.laneNums,
+        is_shuffle=args.shuffle, is_change_lane=args.laneNums, is_flow_scale=args.flowScale,
         is_mask=args.mask, is_noise=args.noise,
         n_stack=args.stack, n_delay=args.delay,
-        model_name=args.model_name
+        model_name=args.model_name, num_cpus=args.cpus
     )
