@@ -125,6 +125,7 @@ def experiment(
 if __name__ == '__main__':
     init_logging(log_path=pathConvert('./'), log_level=0)
     parser = argparse.ArgumentParser()
+    parser.add_argument('--net_name', type=str, default='test_four_34')
     parser.add_argument('--shuffle', default=False, action='store_true')
     parser.add_argument('--laneNums', default=False, action='store_true')
     parser.add_argument('--flowScale', default=False, action='store_true')
@@ -137,6 +138,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     experiment(
+        net_name=args.net_name,
         is_shuffle=args.shuffle, is_change_lane=args.laneNums, is_flow_scale=args.flowScale,
         is_mask=args.mask, is_noise=args.noise,
         n_stack=args.stack, n_delay=args.delay,
