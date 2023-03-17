@@ -7,7 +7,7 @@
  # @LastEditTime: 2023-03-06 14:14:25
 ###
 FOLDER="/home/wmn/TrafficProject/AiolosZoo/Universal_Light"
-CPU = 8
+CPU=8
 
 for net_name in test_four_34 test_three_34 ingolstadt1
 do
