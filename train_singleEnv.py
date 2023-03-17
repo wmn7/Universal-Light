@@ -1,7 +1,7 @@
 '''
 @Author: WANG Maonan
 @Date: 2023-02-15 14:33:49
-@Description: 训练 RL 模型，训练的时候使用多个环境
+@Description: 训练 RL 模型，只在一个环境上进行训练，比较单独训练的模型和有泛化性模型的好坏
 @LastEditTime: 2023-02-24 23:20:10
 '''
 import os
@@ -17,11 +17,12 @@ pathConvert = getAbsPath(__file__)
 
 from sumo_env import makeENV
 from models import scnn, ernn, eattention, eattention_cls
-from create_params import create_params
+from create_params import create_singleEnv_params
 from utils.lr_schedule import linear_schedule
 from utils.env_normalize import VecNormalizeCallback, VecBestNormalizeCallback
 
 def experiment(
+        net_name,
         is_shuffle, is_change_lane, is_flow_scale,
         is_noise, is_mask, 
         n_stack, n_delay, model_name, num_cpus
@@ -39,9 +40,9 @@ def experiment(
     NUM_CPUS = num_cpus
     EVAL_FREQ = 2000 # 一把交互 700 次
     SAVE_FREQ = EVAL_FREQ*2 # 保存的频率
-    MODEL_PATH = pathConvert(f'./results/models/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/')
-    LOG_PATH = pathConvert(f'./results/log/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/') # 存放仿真过程的数据
-    TENSORBOARD_LOG_DIR = pathConvert(f'./results/tensorboard_logs/{model_name}/')
+    MODEL_PATH = pathConvert(f'./results/exp4/models/{net_name}_{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/')
+    LOG_PATH = pathConvert(f'./results/exp4/log/{net_name}_{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/') # 存放仿真过程的数据
+    TENSORBOARD_LOG_DIR = pathConvert(f'./results/exp4/tensorboard_logs/{net_name}')
     if not os.path.exists(MODEL_PATH):
         os.makedirs(MODEL_PATH)
     if not os.path.exists(TENSORBOARD_LOG_DIR):
@@ -49,23 +50,25 @@ def experiment(
     if not os.path.exists(LOG_PATH):
         os.makedirs(LOG_PATH)
 
-    train_params = create_params(
-        is_eval=False, 
+    train_params = create_singleEnv_params(
+        net_name=net_name,
         is_shuffle=SHFFLE, is_change_lane=CHANGE_LANE, is_flow_scale=FLOW_SCALE,
         is_mask=MASK, is_noise=NOISE, 
-        N_DELAY=N_DELAY, N_STACK=N_STACK, LOG_PATH=LOG_PATH
+        N_DELAY=N_DELAY, N_STACK=N_STACK, 
+        LOG_PATH=LOG_PATH
     )
-    eval_params = create_params(
-        is_eval=True, 
+    eval_params = create_singleEnv_params(
+        net_name=net_name,
         is_shuffle=SHFFLE, is_change_lane=CHANGE_LANE, is_flow_scale=FLOW_SCALE,
         is_mask=MASK, is_noise=NOISE, 
-        N_DELAY=N_DELAY, N_STACK=N_STACK, LOG_PATH=LOG_PATH
+        N_DELAY=N_DELAY, N_STACK=N_STACK, 
+        LOG_PATH=LOG_PATH
     )
     # The environment for training
-    env = SubprocVecEnv([makeENV.make_env(env_index=f'{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}_{i}', **train_params) for i in range(NUM_CPUS)])
+    env = SubprocVecEnv([makeENV.make_env(env_index=f'{net_name}_{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}_{i}', **train_params) for i in range(NUM_CPUS)])
     env = VecNormalize(env, norm_obs=True, norm_reward=True) # 进行标准化
     # The environment for evaluating
-    eval_env = SubprocVecEnv([makeENV.make_env(env_index=f'evaluate_{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}', **eval_params) for i in range(1)])
+    eval_env = SubprocVecEnv([makeENV.make_env(env_index=f'evaluate_{net_name}_{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}', **eval_params) for i in range(1)])
     eval_env = VecNormalize(eval_env, norm_obs=True, norm_reward=True) # 进行标准化
     eval_env.training = False # 测试的时候不要更新
     eval_env.norm_reward = False
@@ -111,7 +114,7 @@ def experiment(
                 policy_kwargs=policy_kwargs, learning_rate=linear_schedule(3e-4), 
                 tensorboard_log=TENSORBOARD_LOG_DIR, device=device
             )
-    model.learn(total_timesteps=1e7, tb_log_name=f'{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}', callback=callback_list) # log 的名称
+    model.learn(total_timesteps=2e6, tb_log_name=f'{net_name}_{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}', callback=callback_list) # log 的名称
 
     # #########
     # save env

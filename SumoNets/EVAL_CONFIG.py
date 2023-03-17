@@ -1,7 +1,7 @@
 '''
 @Author: WANG Maonan
 @Date: 2023-02-15 14:33:49
-@Description: 测试所使用的路网
+@Description: 训练过程中用于测试 Reward 的路网
 @LastEditTime: 2023-02-24 23:20:10
 '''
 EVAL_SUMO_CONFIG = dict(

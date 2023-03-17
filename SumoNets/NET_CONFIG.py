@@ -1,7 +1,7 @@
 '''
 @Author: WANG Maonan
 @Date: 2023-02-15 14:33:49
-@Description: 本次实验中使用到的路网
+@Description: 本次实验中使用到的路网，包含训练和测试
 @LastEditTime: 2023-02-24 23:20:10
 '''
 SUMO_NET_CONFIG = dict(
