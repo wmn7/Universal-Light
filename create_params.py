@@ -83,7 +83,7 @@ def create_test_params(
         net_name:str, output_folder:str,
         N_STACK:int, N_DELAY:int, LOG_PATH:str
     ):
-    """对训练路网和测试路网都进行测试
+    """对训练路网和测试路网都进行测试，这里的 mode=eval
     """
     pathConvert = getAbsPath(__file__)
 
@@ -218,7 +218,6 @@ def create_singleEnv_params(
         'min_green':5,
         'log_file':LOG_PATH,
         'env_dict':env_dict,
-        'mode':'eval'
     }
 
     return params
