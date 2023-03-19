@@ -8,11 +8,11 @@
 
 ## 文件介绍
 
-- `train.py`，在多个不同的路口下同时进行训练；
+- `train.py`，在多个不同的路口下同时进行训练，可以指定使用不同的数据增强方法；
 - - **Example**：python train.py --shuffle --laneNums --noise --mask --stack=6 --delay=0 --model_name=ernn
 - `test.py`，对训练好的模型进行测试，指定模型的类型，和需要测试的环境名称；
-- - **Example**：python test.py --shuffle --laneNums --flowScale --noise --mask --stack=6 --delay=0 --model_name=ernn --net_name=$net_name
-
+- - **Example**：python test.py --shuffle --laneNums --flowScale --noise --mask --stack=6 --delay=0 --model_name=ernn --net_name=train_four_3
+- `train_singleEnv.py`
 
 ## TODO
 
