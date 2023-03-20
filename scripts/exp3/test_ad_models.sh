@@ -42,7 +42,7 @@ do
     echo 'laneNums, noise' $net_name
 
     # 9
-    python ${FOLDER}/test.py --laneNums  -mask --stack=6 --delay=0 --exp_type=exp3 --model_name=None --net_name=$net_name 
+    python ${FOLDER}/test.py --laneNums --mask --stack=6 --delay=0 --exp_type=exp3 --model_name=None --net_name=$net_name 
     echo 'laneNums, mask' $net_name
 
     # 10
@@ -67,5 +67,13 @@ do
 
     # 15
     python ${FOLDER}/test.py --mask --stack=6 --delay=0 --exp_type=exp3 --model_name=None --net_name=$net_name 
+    echo 'mask' $net_name
+
+    # 16, All False
+    python ${FOLDER}/test.py --stack=6 --delay=0 --exp_type=exp3 --model_name=None --net_name=$net_name 
+    echo 'mask' $net_name
+
+    # 17, All True
+    python ${FOLDER}/test.py --shuffle --laneNums --flowScale --mask --noise --stack=6 --delay=0 --exp_type=exp3 --model_name=None --net_name=$net_name 
     echo 'mask' $net_name
 done
