@@ -17,21 +17,41 @@ pathConvert = getAbsPath(__file__)
 from sumo_env import makeENV
 from create_params import create_test_params
 
-def test_model(model_name, net_name, is_shuffle, is_change_lane, is_noise, is_mask, n_stack, n_delay):
-    assert model_name in ['scnn', 'ernn', 'eattention'], f'Model name error, {model_name}'
+def test_model(
+        exp_type, model_name, net_name, 
+        is_shuffle, is_change_lane, is_flow_scale,
+        is_noise, is_mask, 
+        n_stack, n_delay,
+        singleEnv=False, fineTune=False,
+    ):
+    if model_name == 'None':
+        model_name = ''
+    assert model_name in ['scnn', 'ernn', 'eattention', ''], f'Model name error, {model_name}'
     # args, 这里为了组合成模型的名字
     SHFFLE = is_shuffle # 是否进行数据增强
     CHANGE_LANE = is_change_lane
+    FLOW_SCALE = is_flow_scale
     NOISE = is_noise
     MASK = is_mask
     N_STACK = n_stack # 堆叠
     N_DELAY = n_delay # 时延
 
-    MODEL_PATH = pathConvert(f'./results/models/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}/best_model.zip')
-    VEC_NORM = pathConvert(f'./results/models/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}/best_vec_normalize.pkl')
-    LOG_PATH = pathConvert(f'./results/log/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}/') # 存放仿真过程的数据
+    if fineTune:
+        fineTune_s = '_fineTune_'
+    else:
+        fineTune_s = '_'
 
-    output_path = pathConvert(f'./results/output/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}/{net_name}')
+    if not singleEnv:
+        MODEL_PATH = pathConvert(f'./results/{exp_type}/models/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/best_model.zip')
+        VEC_NORM = pathConvert(f'./results/{exp_type}/models/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/best_vec_normalize.pkl')
+        LOG_PATH = pathConvert(f'./results/{exp_type}/log/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/') # 存放仿真过程的数据
+        output_path = pathConvert(f'./results/{exp_type}/output/{model_name}/{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/{net_name}')
+    else: # 如果是对单个环境训练的模型，模型名称中会有环境的名字
+        MODEL_PATH = pathConvert(f'./results/{exp_type}/models/{model_name}/{net_name}{fineTune_s}{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/best_model.zip')
+        VEC_NORM = pathConvert(f'./results/{exp_type}/models/{model_name}/{net_name}{fineTune_s}{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/best_vec_normalize.pkl')
+        LOG_PATH = pathConvert(f'./results/{exp_type}/log/{model_name}/{net_name}{fineTune_s}{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/') # 存放仿真过程的数据
+        output_path = pathConvert(f'./results/{exp_type}/output/{model_name}/{net_name}{fineTune_s}{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}/{net_name}')
+
     eval_params = create_test_params(
             net_name=net_name, output_folder=output_path,
             N_DELAY=N_DELAY, N_STACK=N_STACK, 
@@ -39,7 +59,7 @@ def test_model(model_name, net_name, is_shuffle, is_change_lane, is_noise, is_ma
         )
     for _key, eval_param in eval_params.items():
         # The environment for evaluating
-        eval_env = SubprocVecEnv([makeENV.make_env(env_index=f'test_{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{MASK}_{NOISE}', **eval_param) for i in range(1)])
+        eval_env = SubprocVecEnv([makeENV.make_env(env_index=f'test_{N_STACK}_{N_DELAY}_{SHFFLE}_{CHANGE_LANE}_{FLOW_SCALE}_{MASK}_{NOISE}', **eval_param) for i in range(1)])
         eval_env = VecNormalize.load(load_path=VEC_NORM, venv=eval_env) # 进行标准化
         eval_env.training = False # 测试的时候不要更新
         eval_env.norm_reward = False
@@ -78,17 +98,23 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--shuffle', default=False, action='store_true')
     parser.add_argument('--laneNums', default=False, action='store_true')
+    parser.add_argument('--flowScale', default=False, action='store_true')
     parser.add_argument('--noise', default=False, action='store_true')
     parser.add_argument('--mask', default=False, action='store_true')
     parser.add_argument('--stack', type=int, default=4)
     parser.add_argument('--delay', type=int, default=0)
     parser.add_argument('--model_name', type=str, default='scnn')
+    parser.add_argument('--exp_type', type=str, default='exp1_2')
     parser.add_argument('--net_name', type=str, default='test_four_34')
+    parser.add_argument('--singleEnv', default=False, action='store_true')
+    parser.add_argument('--fineTune', default=False, action='store_true')
     args = parser.parse_args()
 
     test_model(
-        is_shuffle=args.shuffle, is_change_lane=args.laneNums,
+        exp_type=args.exp_type,
+        model_name=args.model_name, net_name=args.net_name,
+        is_shuffle=args.shuffle, is_change_lane=args.laneNums, is_flow_scale=args.flowScale,
         is_mask=args.mask, is_noise=args.noise,
         n_stack=args.stack, n_delay=args.delay,
-        model_name=args.model_name, net_name=args.net_name
+        singleEnv=args.singleEnv, fineTune=args.fineTune
     )
