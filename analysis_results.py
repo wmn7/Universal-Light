@@ -1,7 +1,7 @@
 '''
 @Author: WANG Maonan
 @Date: 2022-06-21 22:33:40
-@Description: 分析 sumo output 中的结果
+@Description: 分析 sumo output 中的结果, 获得所有的 waiting time
 @LastEditTime: 2022-07-08 20:03:25
 '''
 from xml.etree import ElementTree as ET
@@ -73,6 +73,13 @@ if __name__ == '__main__':
 
             mask_results = list()
 
+            # ####################
+            # exp4, 模型微调结果分析
+            # ####################
+            singleEnv_result = list()
+            fineTune_result = list()
+            ad_fineTune_result = list()
+
             for _route_name in routes_name:
                 _route_name = _route_name.split('.')[0]
                 # #######
@@ -107,6 +114,11 @@ if __name__ == '__main__':
 
                 mask_path = pathConvert(f'./results/exp3/output/6_0_False_False_False_False_True/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')                
 
+                # exp4, fineTune
+                singleEnv_path = pathConvert(f'./results/exp4/output/{_net_folder}_6_0_False_False_False_False_False/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')
+                fineTune_path = pathConvert(f'./results/exp4/output/{_net_folder}_fineTune_6_0_False_False_False_False_False/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')
+                ad_fineTune_path = pathConvert(f'./results/exp4/output/{_net_folder}_fineTune_6_0_True_True_True_True_True/{_net_folder}/{_net_name}/{_route_name}/statistic.out.xml')
+
                 # ##########
                 # 分析文件结果
                 # ##########
@@ -139,6 +151,12 @@ if __name__ == '__main__':
 
                 mask_wt = get_statistic_result(mask_path)
 
+                # exp4
+                if _net_folder in ['test_four_34', 'test_three_34', 'ingolstadt1']:
+                    singleEnv_wt = get_statistic_result(singleEnv_path)
+                    fineTune_wt = get_statistic_result(fineTune_path)
+                    ad_fineTune_wt = get_statistic_result(ad_fineTune_path)
+
                 # ###########
                 # 添加文件结果
                 # ###########
@@ -169,7 +187,14 @@ if __name__ == '__main__':
                 noise_results.append(noise_wt)
                 noise_mask_results.append(noise_mask_wt)
 
-                mask_results.append(mask_wt)        
+                mask_results.append(mask_wt)
+
+                # exp4
+                if _net_folder in ['test_four_34', 'test_three_34', 'ingolstadt1']:
+                    singleEnv_result.append(singleEnv_wt)
+                    fineTune_result.append(fineTune_wt)
+                    ad_fineTune_result.append(ad_fineTune_wt)
+
 
             print(
                 f'{_net_folder}-{_net_name}:\n'
@@ -196,4 +221,8 @@ if __name__ == '__main__':
                 f'Noise, {noise_results};\n'
                 f'Noise + Mask, {noise_mask_results};\n'
                 f'Mask, {mask_results};\n'
+                f'--- Exp4 ---\n'
+                f'SingleEnv: {singleEnv_result};\n'
+                f'FineTune: {fineTune_result};\n'
+                f'FineTune + AD: {ad_fineTune_result};\n'
             )
