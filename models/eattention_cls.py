@@ -4,11 +4,12 @@
 @Description: Attention Module + Cls token
 @LastEditTime: 2023-03-06 13:48:42
 '''
-import gym
 import numpy as np
+import gymnasium as gym
 
 import torch
 import torch.nn as nn
+
 from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
 
 class EAttentionCLS(BaseFeaturesExtractor):

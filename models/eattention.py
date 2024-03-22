@@ -4,8 +4,8 @@
 @Description: Use CNN to extract features and then use Transformer rather than LSTM
 @LastEditTime: 2023-03-06 13:48:42
 '''
-import gym
 import numpy as np
+import gymnasium as gym
 
 import torch
 import torch.nn as nn

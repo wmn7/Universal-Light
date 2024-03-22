@@ -4,8 +4,8 @@
 @Description: Use CNN to extract features and then use RNN
 @LastEditTime: 2022-06-17 14:47:22
 '''
-import gym
 import numpy as np
+import gymnasium as gym
 
 import torch
 import torch.nn as nn
