@@ -2,7 +2,7 @@
 @Author: WANG Maonan
 @Date: 2023-09-14 13:48:19
 @Description: Create Traffic Signal Control Environment
-@LastEditTime: 2024-03-22 23:09:07
+@LastEditTime: 2024-03-23 16:25:21
 '''
 import gymnasium as gym
 from typing import Dict, List
@@ -19,7 +19,7 @@ def make_env(
         log_file:str, env_index:int,
     ):
     def _init() -> gym.Env:
-        init_tls_id,init_sumo_cfg = init_config['tls_id'], init_config['sumo_cfg']
+        init_tls_id,init_sumo_cfg = init_config['tls_id'], init_config['sumocfg']
 
         # 初始化环境
         tsc_scenario = TSCEnvironment(

@@ -2,7 +2,7 @@
 @Author: WANG Maonan
 @Date: 2022-04-12 12:02:58
 @Description: Use CNN to extract features and then use Transformer rather than LSTM
-@LastEditTime: 2023-03-06 13:48:42
+@LastEditTime: 2024-03-23 01:13:23
 '''
 import numpy as np
 import gymnasium as gym
@@ -55,7 +55,7 @@ class EAttention(BaseFeaturesExtractor):
 
     def forward(self, observations):
         batch_size = observations.size()[0] # (BatchSize, N, 8, K)
-        observations = observations.view(-1, 1, 8, self.net_shape[-1]) # (BatchSize*N, 1, 8, K)
+        observations = observations.view(-1, 1, 12, self.net_shape[-1]) # (BatchSize*N, 1, 7, K)
         conv_out = self.view_conv(observations).view(batch_size, self.net_shape[0], -1) # (BatchSize*N, 128) --> (BatchSize, N, 128)
         # embedding
         x = self.junction_embedding(conv_out) # (BatchSize, N, 128) --> (BatchSize, N, 64)
