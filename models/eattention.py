@@ -2,7 +2,7 @@
 @Author: WANG Maonan
 @Date: 2022-04-12 12:02:58
 @Description: Use CNN to extract features and then use Transformer rather than LSTM
-@LastEditTime: 2024-03-23 01:13:23
+@LastEditTime: 2024-03-24 22:17:06
 '''
 import numpy as np
 import gymnasium as gym
@@ -16,13 +16,13 @@ class EAttention(BaseFeaturesExtractor):
         """利用 RNN 提取信息
         """
         super().__init__(observation_space, features_dim)
-        self.net_shape = observation_space.shape # 每个 movement 的特征数量, 8 个 movement, 就是 (N, 8, K)
+        self.net_shape = observation_space.shape # 每个 movement 的特征数量, 12 个 movement, 就是 (N, 12, K)
         # 这里 N 表示由 N 个 frame 堆叠而成
 
         self.view_conv = nn.Sequential(
-            nn.Conv2d(1, 64, kernel_size=(1, self.net_shape[-1]), padding=0), # N*1*8*K -> N*64*8*1
+            nn.Conv2d(1, 64, kernel_size=(1, self.net_shape[-1]), padding=0), # N*1*12*K -> N*64*12*1
             nn.ReLU(),
-            nn.Conv2d(64, 128, kernel_size=(8,1), padding=0), # N*64*8*1 -> N*128*1*1 (BatchSize, N, 128, 1, 1)
+            nn.Conv2d(64, 128, kernel_size=(12,1), padding=0), # N*64*12*1 -> N*128*1*1 (BatchSize, N, 128, 1, 1)
             nn.ReLU(),
         ) # 每一个 junction matrix 提取的特征
         view_out_size = self._get_conv_out(self.net_shape)
