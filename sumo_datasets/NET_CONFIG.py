@@ -1,13 +1,8 @@
 '''
 @Author: WANG Maonan
 @Date: 2023-02-15 14:33:49
-@Description: SUMO Net 的配置文件, 记录每个文件夹包含的:
--> nets, routes, sumocfg
--> junction 的 ID
--> 路网的 edges
--> edges 的连接关系
-这里需要注意，每个文件夹包含的路网只有相位结构不一样，其他都是一样的
-@LastEditTime: 2023-02-24 23:20:10
+@Description: 本次实验中使用到的路网，包含训练和测试
+@LastEditTime: 2024-03-24 18:50:51
 '''
 SUMO_NET_CONFIG = dict(
     # 四路口, 车道数 (3,3,3,3)
@@ -48,31 +43,6 @@ SUMO_NET_CONFIG = dict(
             'WE-EW':['E0 E1', '-E1 -E0'],
         }
     ),
-    # 三路口, 车道数 (3,4,4)
-    train_three_34=dict(
-        tls_id = 'J1',
-        sumocfg = 'train_three_34.sumocfg',
-        nets = ['3phases.net.xml', '3phases_s.net.xml'],
-        routes = ['0.rou.xml', '1.rou.xml', '2.rou.xml', '3.rou.xml', '4.rou.xml'],
-        start_time = 0,
-        edges = ['E0', '-E1', '-E3'],
-        connections = {
-            'WE-EW':['E0 E1', '-E1 -E0'],
-        }
-    ),
-    # 四路口, 车道数 (3,3,3,3)
-    test_four_3=dict(
-        tls_id = 'J1',
-        sumocfg = 'test_four_3.sumocfg',
-        nets = ['6phases.net.xml'],
-        routes = ['0.rou.xml', '1.rou.xml', '2.rou.xml', '3.rou.xml', '4.rou.xml'],
-        start_time = 0,
-        edges = ['E0', '-E2', '-E1', '-E3'],
-        connections = {
-            'WE-EW':['E0 E1', '-E1 -E0'],
-            'NS-SN':['-E3 E2', '-E2 E3']
-        }
-    ),
     # 四路口, 车道数 (3,3,4,4)
     test_four_34=dict(
         tls_id = 'J1',
@@ -80,7 +50,7 @@ SUMO_NET_CONFIG = dict(
         nets = ['4phases.net.xml'],
         routes = ['0.rou.xml', '1.rou.xml', '2.rou.xml', '3.rou.xml', '4.rou.xml'],
         start_time = 0,
-        edges = ['E0', '-E1', '-E3'],
+        edges = ['E0', '-E1', '-E3', 'E2'],
         connections = {
             'WE-EW':['E0 E1', '-E1 -E0'],
             'NS-SN':['-E3 E2', '-E2 E3']
