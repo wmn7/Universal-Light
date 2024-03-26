@@ -2,7 +2,7 @@
  * @Author: WANG Maonan
  * @Date: 2023-03-01 17:22:53
  * @Description: Universal Light Introduction
- * @LastEditTime: 2024-03-26 23:36:16
+ * @LastEditTime: 2024-03-26 23:38:53
 -->
 # UniTSA: A Universal Reinforcement Learning Framework for V2X Traffic Signal Control 
 
@@ -20,22 +20,23 @@ This repository contains the code for the paper "UniTSA: A Universal Reinforceme
 
 <div align=center>
    <img src="./assets/junction_matrix.png" width="85%" >
-   <figcaption> (a) A 3-way intersection with (b) its junction matrix with zero padding.</figcaption>
 </div>
+<p align="center">(a) A 3-way intersection with (b) its junction matrix with zero padding.</p>
 
 1. **Performance Enhancement at Unseen Intersections**: UniTSA incorporates traffic state augmentation techniques that emphasize the relative positioning of vehicles, enhancing the model's adaptability to changing traffic conditions and unfamiliar scenarios.
 
 <div align=center>
    <img src="./assets/state_augmentation_example.png" width="85%" >
-   <figcaption>llustration of three traffic state augmentation methods applied to both 4-way and 3-way intersections.</figcaption>
 </div>
+<p align="center">llustration of three traffic state augmentation methods applied to both 4-way and 3-way intersections.</p>
 
-3. **Improved Results at Key Intersections**: UniTSA integrates the Low-Rank Adaptation (LoRA) method, allowing for efficient model customization to specific intersections with minimal additional training.
+
+1. **Improved Results at Key Intersections**: UniTSA integrates the Low-Rank Adaptation (LoRA) method, allowing for efficient model customization to specific intersections with minimal additional training.
 
 <div align=center>
    <img src="./assets/overall_framework.png" width="85%" >
-   <figcaption>The overall framework of UniTSA, including: 1. RL Training and 2. Fine-tuning.</figcaption>
 </div>
+<p align="center">The overall framework of UniTSA, including: 1. RL Training and 2. Fine-tuning.</p>
 
 ## 📥 Installation
 
