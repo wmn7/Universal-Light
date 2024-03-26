@@ -2,7 +2,7 @@
 @Author: WANG Maonan
 @Date: 2022-03-15 12:02:58
 @Description: 测试模型 eattention_cls 的输出, 和 eattention 比起来, 加入了 cls token, 简化了最终的参数
-@LastEditTime: 2024-03-22 20:27:56
+@LastEditTime: 2024-03-26 22:08:31
 '''
 import sys
 from tshub.utils.get_abs_path import get_abs_path
@@ -13,7 +13,7 @@ import torch
 import numpy as np
 import gymnasium as gym
 
-from models.eattention_cls import EAttentionCLS
+from model_structures.eattention_cls import EAttentionCLS
 
 if __name__ == '__main__':
     # Input 是一个 N*8*8 的矩阵

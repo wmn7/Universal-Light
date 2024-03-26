@@ -2,7 +2,7 @@
 @Author: WANG Maonan
 @Date: 2022-03-15 12:02:58
 @Description: 测试模型 ernn 的表现
-@LastEditTime: 2024-03-22 20:29:17
+@LastEditTime: 2024-03-26 22:08:28
 '''
 import sys
 from tshub.utils.get_abs_path import get_abs_path
@@ -13,7 +13,7 @@ import torch
 import numpy as np
 import gymnasium as gym
 
-from models.ernn import ERNN
+from model_structures.ernn import ERNN
 
 
 if __name__ == '__main__':

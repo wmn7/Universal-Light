@@ -3,7 +3,7 @@
 @Date: 2024-03-22 20:44:48
 @Description: 基础 Wrapper, 处理 Obs, Acton, Reward
 Noted: 这里和论文有一些不同, 我们将右转的 movement 也考虑在内, 进一步增强通用性
-@LastEditTime: 2024-03-24 00:45:49
+@LastEditTime: 2024-03-24 18:55:21
 '''
 import os
 import numpy as np
@@ -12,7 +12,6 @@ from typing import Dict
 from loguru import logger
 
 from .reward_utils import FixedRangeNormalizer, RewardNormalizer
-
 
 class base_wrapper(gym.Wrapper):
     """
@@ -96,6 +95,7 @@ class base_wrapper(gym.Wrapper):
         can_perform_action = False
         total_obs = [] # max length=5
         total_rewards = [] # 将每个时刻的奖励求平均值
+        self.info_avg_waiting_time = [] # 直接记录所有车辆的等待时间, 通过 info 传出去, 用于比较结果
 
         while not can_perform_action:
             final_action = {self.tls_id: action} # 构建单路口 action 的动作
@@ -106,8 +106,8 @@ class base_wrapper(gym.Wrapper):
             
             # Process the observation and accumulate the reward
             processed_obs = self._process_obs(tls_state)
-            total_rewards.append(self._process_normalized_reward(_observations['vehicle']))
-            # total_reward += self._process_reward(_observations['vehicle'])
+            total_rewards.append(self._process_normalized_reward(_observations['vehicle'])) # 每一个时刻的 reward
+            # total_rewards.append(self._process_reward(_observations['vehicle']))
 
             # Ensure total_obs does not exceed length of 5
             if len(total_obs) >= 5:
@@ -118,9 +118,10 @@ class base_wrapper(gym.Wrapper):
 
         # Normalize Reward
         total_reward = sum(total_rewards)/len(total_rewards) # 计算每个时刻的平均奖励
-        infos['avg_waiting_time'] = total_reward # 在 info 里面记录一下平均等待时间, 方便后期比较
-        self.reward_normalizer[self.key].update(total_reward)
+        infos['avg_waiting_time'] = np.mean(self.info_avg_waiting_time) # 在 info 里面记录一下平均等待时间, 方便后期比较
+        self.reward_normalizer[self.key].update(total_reward) # 需要为每一个 env 维护一个归一化参数
         final_reward = self.reward_normalizer[self.key].normalize(total_reward)
+        final_reward = total_reward
         return total_obs, final_reward, truncated, dones, infos
     
 
@@ -160,11 +161,12 @@ class base_wrapper(gym.Wrapper):
         :param vehicle_state: The state of vehicles in the environment.
         :return: The negative average waiting time as the reward.
         """
-        waiting_times = [veh['waiting_time'] for veh in vehicle_state.values()] # 统计等待时间
+        waiting_times = [veh['waiting_time'] for veh in vehicle_state.values()] # 这里需要优化所有车的等待时间, 而不是停止车辆的等待时间
+        self.info_avg_waiting_time.append(np.mean(waiting_times) if waiting_times else 0)
         
         return -np.mean(waiting_times) if waiting_times else 0
 
-    def _process_normalized_reward(self, vehicle_state, max_waiting_time=30):
+    def _process_normalized_reward(self, vehicle_state, max_waiting_time=60):
         """
         Calculate a normalized reward based on vehicle waiting times, number of phases, and number of lanes.
         Clip the waiting time to a maximum value.
@@ -174,7 +176,7 @@ class base_wrapper(gym.Wrapper):
         :return: The normalized reward.
         """
         # Clip waiting times to the maximum value and filter out vehicles with zero waiting time
-        waiting_times = [min(veh['waiting_time'], max_waiting_time) for veh in vehicle_state.values() if veh['waiting_time'] > 0]
+        waiting_times = [min(veh['waiting_time'], max_waiting_time) for veh in vehicle_state.values()]
         total_waiting_time = sum(waiting_times)
         num_vehicles = len(waiting_times) # 只统计大于 0 的车的数量
         
@@ -186,7 +188,8 @@ class base_wrapper(gym.Wrapper):
             normalized_waiting_time = total_waiting_time / (num_vehicles * green_phase_efficiency)
         else:
             normalized_waiting_time = 0
-        
+        self.info_avg_waiting_time.append(normalized_waiting_time) # 添加变换之前的 waiting time
+
         # Invert the normalized waiting time as we want to reward lower waiting times
         # and penalize higher waiting times
         reward = 1 / normalized_waiting_time if normalized_waiting_time > 0 else 1

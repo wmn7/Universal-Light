@@ -2,7 +2,7 @@
 @Author: WANG Maonan
 @Date: 2022-03-15 12:02:58
 @Description: 测试模型 eattention 的输出
-@LastEditTime: 2024-03-23 01:12:14
+@LastEditTime: 2024-03-26 22:08:33
 '''
 import sys
 from tshub.utils.get_abs_path import get_abs_path
@@ -13,8 +13,7 @@ import torch
 import numpy as np
 import gymnasium as gym
 
-from models.eattention import EAttention
-
+from model_structures.eattention import EAttention
 
 if __name__ == '__main__':
     # Input 是一个 N*8*8 的矩阵

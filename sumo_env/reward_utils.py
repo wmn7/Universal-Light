@@ -2,7 +2,7 @@
 @Author: WANG Maonan
 @Date: 2024-03-23 19:15:53
 @Description: 奖励归一化 & 固定范围标准化
-@LastEditTime: 2024-03-23 21:23:28
+@LastEditTime: 2024-03-24 19:03:24
 '''
 class FixedRangeNormalizer:
     def __init__(self):
