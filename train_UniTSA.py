@@ -2,7 +2,7 @@
 @Author: WANG Maonan
 @Date: 2024-03-23 01:06:18
 @Description: 不使用数据增强进行训练
-@LastEditTime: 2024-03-24 21:55:27
+@LastEditTime: 2024-03-26 22:09:48
 '''
 import os
 import torch
@@ -13,8 +13,8 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import SubprocVecEnv, VecNormalize
 from stable_baselines3.common.callbacks import CallbackList, CheckpointCallback
 
-from models.scnn import SCNN
-from models.eattention import EAttention
+from model_structures.scnn import SCNN
+from model_structures.eattention import EAttention
 from sumo_env.make_tsc_env import make_env
 from utils.lr_schedule import linear_schedule
 from sumo_datasets.TRAIN_CONFIG import TRAIN_SUMO_CONFIG as SUMO_CONFIG # 训练路网的信息

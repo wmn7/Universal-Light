@@ -2,7 +2,7 @@
 @Author: WANG Maonan
 @Date: 2024-03-24 00:35:50
 @Description: 测试训练的模型
-@LastEditTime: 2024-03-26 21:18:50
+@LastEditTime: 2024-03-26 22:52:33
 '''
 import torch
 from loguru import logger
