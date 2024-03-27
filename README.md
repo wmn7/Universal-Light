@@ -2,7 +2,7 @@
  * @Author: WANG Maonan
  * @Date: 2023-03-01 17:22:53
  * @Description: Universal Light Introduction
- * @LastEditTime: 2024-03-26 23:38:53
+ * @LastEditTime: 2024-03-28 00:21:54
 -->
 # UniTSA: A Universal Reinforcement Learning Framework for V2X Traffic Signal Control 
 
@@ -11,19 +11,19 @@ This repository contains the code for the paper "UniTSA: A Universal Reinforceme
 
 ## 🎉 News
 
-1. We have transitioned the simulation platform in the project from Aiolos to [TransSimHub](https://github.com/Traffic-Alpha/TransSimHub) (TSHub). We extend our gratitude to our colleagues at SenseTime, @KanYuheng, @MaZian, and @XuChengcheng (listed alphabetically) for their contributions. The development of TransSimHub (TSHub) is built upon the foundation of Aiolos.
+1. We have transitioned the simulation platform in the project from Aiolos to [TransSimHub](https://github.com/Traffic-Alpha/TransSimHub) (TSHub). We extend our gratitude to our colleagues at SenseTime, **@KanYuheng**, **@MaZian**, and **@XuChengcheng** (listed alphabetically) for their contributions. The development of TransSimHub (TSHub) is built upon the foundation of Aiolos.
 2. The weights of the model have been uploaded. The uploaded model weights can be found in [save_models](./save_models) and can be verified using `eval_model.py`.
 
 ## 🔑 Key Points
 
-1. **Universal Model for Different Intersections**: UniTSA uses a junction matrix to characterize different intersections, enabling the same model to be applied to various intersection designs.
+- **Universal Model for Different Intersections**: UniTSA uses a junction matrix to characterize different intersections, enabling the same model to be applied to various intersection designs.
 
 <div align=center>
    <img src="./assets/junction_matrix.png" width="85%" >
 </div>
 <p align="center">(a) A 3-way intersection with (b) its junction matrix with zero padding.</p>
 
-1. **Performance Enhancement at Unseen Intersections**: UniTSA incorporates traffic state augmentation techniques that emphasize the relative positioning of vehicles, enhancing the model's adaptability to changing traffic conditions and unfamiliar scenarios.
+- **Performance Enhancement at Unseen Intersections**: UniTSA incorporates traffic state augmentation techniques that emphasize the relative positioning of vehicles, enhancing the model's adaptability to changing traffic conditions and unfamiliar scenarios.
 
 <div align=center>
    <img src="./assets/state_augmentation_example.png" width="85%" >
@@ -31,7 +31,7 @@ This repository contains the code for the paper "UniTSA: A Universal Reinforceme
 <p align="center">llustration of three traffic state augmentation methods applied to both 4-way and 3-way intersections.</p>
 
 
-1. **Improved Results at Key Intersections**: UniTSA integrates the Low-Rank Adaptation (LoRA) method, allowing for efficient model customization to specific intersections with minimal additional training.
+- **Improved Results at Key Intersections**: UniTSA integrates the Low-Rank Adaptation (LoRA) method, allowing for efficient model customization to specific intersections with minimal additional training.
 
 <div align=center>
    <img src="./assets/overall_framework.png" width="85%" >
@@ -105,16 +105,28 @@ Here:
 
 ## 📚 Citation
 
-If you find this work useful, please cite our paper:
+If you find this work useful, please cite our papers:
 
 ```bibtex
 @article{wang2023unitsa,
-  title={Unitsa: A universal reinforcement learning framework for v2x traffic signal control},
+  title={UniTSA: A universal reinforcement learning framework for v2x traffic signal control},
   author={Wang, Maonan and Xiong, Xi and Kan, Yuheng and Xu, Chengcheng and Pun, Man-On},
   journal={arXiv preprint arXiv:2312.05090},
   year={2023}
 }
 ```
+
+The paper below presents the preliminary concept of `UniTSA`, specifically introducing the `movement shuffle` concept:
+
+```bibtex
+@inproceedings{wang2022adlight,
+  title={{ADLight}: A Universal Approach of Traffic Signal Control with Augmented Data Using Reinforcement Learning},
+  author={Wang, Maonan and Xu, Yutong and Xiong, Xi and Kan, Yuheng and Xu, Chengcheng and Pun, Man-On},
+  booktitle={2023 Transportation Research Board Annual Meeting (102nd TRB)},
+  year={2023},
+}
+```
+
 
 ## 📫 Contact
 
