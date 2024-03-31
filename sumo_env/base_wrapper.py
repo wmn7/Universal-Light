@@ -3,7 +3,7 @@
 @Date: 2024-03-22 20:44:48
 @Description: 基础 Wrapper, 处理 Obs, Acton, Reward
 Noted: 这里和论文有一些不同, 我们将右转的 movement 也考虑在内, 进一步增强通用性
-@LastEditTime: 2024-03-24 18:55:21
+@LastEditTime: 2024-03-28 00:32:20
 '''
 import os
 import numpy as np
@@ -178,7 +178,7 @@ class base_wrapper(gym.Wrapper):
         # Clip waiting times to the maximum value and filter out vehicles with zero waiting time
         waiting_times = [min(veh['waiting_time'], max_waiting_time) for veh in vehicle_state.values()]
         total_waiting_time = sum(waiting_times)
-        num_vehicles = len(waiting_times) # 只统计大于 0 的车的数量
+        num_vehicles = len(waiting_times) # 需要优化所有车辆的等待时间, 而不是已经停止的车
         
         # green_phase_efficiency = self.num_open_lanes_during_green / self.num_lanes # 绿灯时可以通行的车道占比
         green_phase_efficiency = 1 # 直接使用 Fix Norm, 不使用这个来优化了
