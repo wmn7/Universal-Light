@@ -2,7 +2,7 @@
  * @Author: WANG Maonan
  * @Date: 2023-03-01 17:22:53
  * @Description: Universal Light Introduction
- * @LastEditTime: 2024-03-28 00:21:54
+ * @LastEditTime: 2024-06-07 19:10:01
 -->
 # UniTSA: A Universal Reinforcement Learning Framework for V2X Traffic Signal Control 
 
@@ -11,8 +11,9 @@ This repository contains the code for the paper "UniTSA: A Universal Reinforceme
 
 ## 🎉 News
 
-1. We have transitioned the simulation platform in the project from Aiolos to [TransSimHub](https://github.com/Traffic-Alpha/TransSimHub) (TSHub). We extend our gratitude to our colleagues at SenseTime, **@KanYuheng**, **@MaZian**, and **@XuChengcheng** (listed alphabetically) for their contributions. The development of TransSimHub (TSHub) is built upon the foundation of Aiolos.
-2. The weights of the model have been uploaded. The uploaded model weights can be found in [save_models](./save_models) and can be verified using `eval_model.py`.
+1. Congratulations! Our research has been accepted by IEEE Transactions on Vehicular Technology. [Read the paper here](https://ieeexplore.ieee.org/abstract/document/10535743/).
+2. We have transitioned the simulation platform in the project from Aiolos to [TransSimHub](https://github.com/Traffic-Alpha/TransSimHub) (TSHub). We extend our gratitude to our colleagues at SenseTime, **@KanYuheng**, **@MaZian**, and **@XuChengcheng** (listed alphabetically) for their contributions. The development of TransSimHub (TSHub) is built upon the foundation of Aiolos.
+3. The weights of the model have been uploaded. The uploaded model weights can be found in [save_models](./save_models) and can be verified using `eval_model.py`.
 
 ## 🔑 Key Points
 
@@ -108,11 +109,15 @@ Here:
 If you find this work useful, please cite our papers:
 
 ```bibtex
-@article{wang2023unitsa,
-  title={UniTSA: A universal reinforcement learning framework for v2x traffic signal control},
+@article{wang2024unitsa,
   author={Wang, Maonan and Xiong, Xi and Kan, Yuheng and Xu, Chengcheng and Pun, Man-On},
-  journal={arXiv preprint arXiv:2312.05090},
-  year={2023}
+  journal={IEEE Transactions on Vehicular Technology}, 
+  title={{UniTSA}: A Universal Reinforcement Learning Framework for V2X Traffic Signal Control}, 
+  year={2024},
+  volume={},
+  number={},
+  pages={1-16},
+  doi={10.1109/TVT.2024.3403879}
 }
 ```
 
