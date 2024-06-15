@@ -2,7 +2,7 @@
  * @Author: WANG Maonan
  * @Date: 2023-03-01 17:22:53
  * @Description: Universal Light Introduction
- * @LastEditTime: 2024-06-07 19:10:01
+ * @LastEditTime: 2024-06-15 21:43:12
 -->
 # UniTSA: A Universal Reinforcement Learning Framework for V2X Traffic Signal Control 
 
@@ -12,7 +12,7 @@ This repository contains the code for the paper "UniTSA: A Universal Reinforceme
 ## 🎉 News
 
 1. Congratulations! Our research has been accepted by IEEE Transactions on Vehicular Technology. [Read the paper here](https://ieeexplore.ieee.org/abstract/document/10535743/).
-2. We have transitioned the simulation platform in the project from Aiolos to [TransSimHub](https://github.com/Traffic-Alpha/TransSimHub) (TSHub). We extend our gratitude to our colleagues at SenseTime, **@KanYuheng**, **@MaZian**, and **@XuChengcheng** (listed alphabetically) for their contributions. The development of TransSimHub (TSHub) is built upon the foundation of Aiolos.
+2. We have transitioned the simulation platform in the project from Aiolos to [TransSimHub](https://github.com/Traffic-Alpha/TransSimHub) (TSHub). We extend our gratitude to our colleagues at SenseTime, **@KanYuheng (阚宇衡)**, **@MaZian (马子安)**, and **@XuChengcheng (徐承成)** (listed alphabetically) for their contributions. The development of TransSimHub (TSHub) is built upon the foundation of Aiolos.
 3. The weights of the model have been uploaded. The uploaded model weights can be found in [save_models](./save_models) and can be verified using `eval_model.py`.
 
 ## 🔑 Key Points
