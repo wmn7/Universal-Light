@@ -2,12 +2,14 @@
  * @Author: WANG Maonan
  * @Date: 2023-03-01 17:22:53
  * @Description: Universal Light Introduction
- * @LastEditTime: 2024-06-15 21:43:12
+ * @LastEditTime: 2024-06-21 17:23:29
 -->
 # UniTSA: A Universal Reinforcement Learning Framework for V2X Traffic Signal Control 
 
-This repository contains the code for the paper "UniTSA: A Universal Reinforcement Learning Framework for V2X Traffic Signal Control".
+**[Paper](https://ieeexplore.ieee.org/abstract/document/10535743/) | [Blog-1](https://mp.weixin.qq.com/s/RPYLqVYRyGci-r7HCsgWVw) | [Blog-2](https://github.com/Traffic-Alpha/awesome-V2X/blob/main/Paper/2024/Wang_2024_UniTSA.md) | [Model Checkpoint Download](./save_models/)**
 
+
+This repository contains the code for the paper "UniTSA: A Universal Reinforcement Learning Framework for V2X Traffic Signal Control".
 
 ## 🎉 News
 
